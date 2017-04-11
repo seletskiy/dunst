@@ -14,6 +14,7 @@ typedef struct _dimension_t {
         unsigned int w;
         int mask;
         int negative_width;
+        int center;
 } dimension_t;
 
 typedef struct _screen_info {

@@ -703,6 +703,14 @@ static void x_win_move(int width, int height)
                 y = scr->dim.y + xctx.geometry.y;
         }
 
+        if (xctx.geometry.center && xctx.geometry.x == 0) {
+                x = (scr->dim.x + (scr->dim.w - width) / 2);
+        }
+
+        if (xctx.geometry.center && xctx.geometry.y == 0) {
+                y = (scr->dim.y + (scr->dim.y - height) / 2);
+        }
+
         /* move and resize */
         if (x != xctx.window_dim.x || y != xctx.window_dim.y) {
                 XMoveWindow(xctx.dpy, xctx.win, x, y);
@@ -970,6 +978,13 @@ void x_setup(void)
                 xctx.color_strings[ColFrame][CRIT] = settings.critframecolor;
         else
                 xctx.color_strings[ColFrame][CRIT] = settings.frame_color;
+
+        if (settings.geom[0] == '=') {
+                xctx.geometry.center = true;
+                settings.geom++;
+        } else {
+                xctx.geometry.center = false;
+        }
 
         /* parse and set xctx.geometry and monitor position */
         if (settings.geom[0] == '-') {
